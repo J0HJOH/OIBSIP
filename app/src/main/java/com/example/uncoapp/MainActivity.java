@@ -25,11 +25,7 @@ public class MainActivity
 //Declaring the Widgets
     EditText editText;
     TextView cm,foot,mm,nm,meters,miles, yard, inches,kilometer;
-    Spinner convertFrom, convertTo;
-
-
-
-    Logic myLogic = new Logic();
+    Spinner  convertTo;
 
 
 
@@ -51,12 +47,12 @@ public class MainActivity
         kilometer = findViewById(R.id.km);
 
         editText = findViewById(R.id.num_Input);
-        convertFrom = findViewById(R.id.convert_from);
+//        convertFrom = findViewById(R.id.convert_from);
         convertTo = findViewById(R.id.convert_to);
 
 //        This tells the app which item of the spinner is clicked
         convertTo.setOnItemSelectedListener(this);
-        convertFrom.setOnItemSelectedListener(this);
+//        convertFrom.setOnItemSelectedListener(this);
 
 //        Creating an instance of Array adapter and this appends the
 //        list of items to a spinner layout so the adapter can manage it
@@ -68,11 +64,10 @@ public class MainActivity
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 //        sets adapter which binds data to the spinner
-        convertFrom.setAdapter(ad);
+//        convertFrom.setAdapter(ad);
         convertTo.setAdapter(ad);
-//
 
-//
+
 ////        Storing the user input as a string
 //        String input  = editText.getText().toString();
 
@@ -92,6 +87,7 @@ public class MainActivity
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 updateFig();
             }
 
@@ -116,10 +112,10 @@ public class MainActivity
 
 public void updateFig(){
         String input = editText.getText().toString();
-        String selectedUnit = convertFrom.getSelectedItem().toString();
+//        String selectedUnit = convertFrom.getSelectedItem().toString();
         String convertingUnit = convertTo.getSelectedItem().toString();
     if(!input.equals("")
-            && !selectedUnit.equals("")
+//            && !selectedUnit.equals("")
             && !convertingUnit.equals("")
     ){
         //        Changing the string to a double
@@ -128,13 +124,14 @@ public void updateFig(){
 //        Convert to these different cases
         switch (convertingUnit){
             case "meters" :
-                myLogic.cmTometers();
-                break;
-            case "inches" :
-                myLogic.cmToInch();
-                break;
             case "yard" :
-                myLogic.cmToYards(num);
+            case "kilometer" :
+            case "inches" :
+            case "miles" :
+            case "cm" :
+            case "foot" :
+            case "nanometer" :
+                setM(num);
                 break;
         }
 
@@ -143,4 +140,16 @@ public void updateFig(){
     }
 
 }
+
+    private void setM(double m_num) {
+        meters.setText(String.valueOf(m_num + "cm"));
+        kilometer.setText(String.valueOf(m_num/1000 + "cm"));
+        inches.setText(String.valueOf(m_num *39.37 + "cm"));
+        foot.setText(String.valueOf(m_num* 3.281 + "cm"));
+        cm.setText(String.valueOf(m_num * 100 + "cm"));
+        nm.setText(String.valueOf(m_num * 1000000000 + "cm"));
+        miles.setText(String.valueOf(m_num/1609 + "cm"));
+        mm.setText(String.valueOf(m_num * 1000 + "cm"));
+        yard.setText(String.valueOf(m_num * 1.094 + "cm"));
+    }
 }
